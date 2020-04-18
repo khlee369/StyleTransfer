@@ -6,13 +6,17 @@ An implementaion of Style Transfer in Tensorflow
 * python version : 3.5.6
 * tensorflow version : 1.10.0
 
-## Examples(output)
+## Examples
 
+### Input
 <img src="./data/abathur.jpg" width="600" height="400"/>
+### Output
 <img src="./data/output_output_abathur_scream_172458.jpg" width="600" height="400"/>
 <img src="./data/output_output_abathur_RAIN_PRINCESS_175633.jpg" width="600" height="400"/>
 
+### Input
 <img src="./data/simlove1.jpg" width="300" height="400"/>
+### Output
 <img src="./data/output_output_simlove1_scream_17525.jpg" width="300" height="400"/>
 <img src="./data/output_output_simlove1_RAIN_PRINCESS_182831.jpg" width="300" height="400"/>
 
