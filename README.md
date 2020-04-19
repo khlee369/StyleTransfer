@@ -5,20 +5,24 @@ An implementaion of Style Transfer in Tensorflow
 ## requirements
 * python version : 3.5.6
 * tensorflow version : 1.10.0
+* pre-trained vgg19 : [Download][vgg_w]
 
-## Examples
+### How to use pre-trained vgg19
+``` python
+from six.moves import cPickle
+vgg_w = cPickle.load(open('./data/vgg19_weights.pkl', 'rb'))
+vgg_mean = np.array([123.68, 116.779, 103.939], dtype=np.float32)
+```
 
-### Input
+vgg_w is a dictionary of tuples(size 2), first elements is an weight, second is a bias.
+
+## Examples(output)
+
 <img src="./data/abathur.jpg" width="600" height="400"/>
-
-### Output
 <img src="./data/output_output_abathur_scream_172458.jpg" width="600" height="400"/>
 <img src="./data/output_output_abathur_RAIN_PRINCESS_175633.jpg" width="600" height="400"/>
 
-### Input
 <img src="./data/simlove1.jpg" width="300" height="400"/>
-
-### Output
 <img src="./data/output_output_simlove1_scream_17525.jpg" width="300" height="400"/>
 <img src="./data/output_output_simlove1_RAIN_PRINCESS_182831.jpg" width="300" height="400"/>
 
@@ -34,10 +38,25 @@ An implementaion of Style Transfer in Tensorflow
 
 ![oldimg](./data/old_abathur.PNG)
 
-* old version은 content image 사이즈와 style image 사이즈가 같아야지만 모델이 작동하고 content loss와 style loss에 사용되는 layer(i.e. conv1_1, conv2_1, etc.)의 수를 임의로 조정 할 수 없는 문제가 있었고 output image에 noise가 심하였다. 또한, Tensorflow를 이용한 논문 구현의 첫 시도였기에 코드의 readability가 매우 떨어진다.
+* In the case of old version, content_image_size and style_image_size are must be same to run the model. And there is a problem that the model can not use arbitrary number of layers used for content loss(i.e. conv1_1, conv2_1) and style loss vice versa(old version use only 2 layers for each loss). And there was severe noise in the output image. Also, since it was the first attempt to implement a paper using Tensorflow, the readability of the code is very poor.
 
-* recenet version은 위의 문제점을 해결하기 위해 다시 짠 코드로 [이곳]을 참고하였다. content loss에 사용된 layer가 relu4_1인 경우 conv4_1인 경우 보다output image에서 content 원본의 특징이(색 팔레트, 윤곽등) 더 많이 나타났다.
-* content_loss, style_loss, noise_loss(output image denoising을 위한 loss)각각의 wieght(i.e. hyper parameter)를 잘 조정해야 기대되는 output image를 얻을 수 있다.
+* The recent version was coded to solve above problems. I referred [here][refer_post]. 
+
+* When the layer used for the content loss was relu4_1, the characteristics of the original content (color palette, outline, etc.) appeared more in the output image than in the case of conv4_1.
+
+* I referred [Wikipedia][denoise] for denosing algorithm.
+
+
+## Reference
+
+[A Neural Algorithm of Artistic Style][paper1]
+
+
+[paper1]: https://arxiv.org/pdf/1508.06576v2.pdf
+[refer_post]: https://medium.com/machine-learning-algorithms/image-style-transfer-740d08f8c1bd
+[denoise]: https://en.wikipedia.org/wiki/Total_variation_denoising
+
+[vgg_w]: https://drive.google.com/file/d/1JqZyGVQNcT-gmvTXHJVOoT9rUVoGa3_-/view?usp=sharing
 
 #### Extra discussion
-* 메모리가 충분한 GPU가 여러개 꼽혀있으면 모델을 돌리기 좋다. (GPU 사고싶다)
+* If you have multiple GPUs with enough memory, it's good to run the model. (want some gpu...)
