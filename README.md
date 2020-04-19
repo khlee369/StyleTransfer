@@ -10,7 +10,7 @@ An implementaion of Style Transfer in Tensorflow
 ### How to use pre-trained vgg19
 ``` python
 from six.moves import cPickle
-vgg_w = cPickle.load(open('./data/vgg19_weights.pkl', 'rb'))
+vgg_w = cPickle.load(open('./vgg19_weights.pkl', 'rb'))
 vgg_mean = np.array([123.68, 116.779, 103.939], dtype=np.float32)
 ```
 
